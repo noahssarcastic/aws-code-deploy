@@ -7,47 +7,18 @@ packer {
   }
 }
 
-source "amazon-ebs" "ubuntu" {
+source "amazon-ebs" "al2" {
   ami_name      = "test-app-v${var.version}"
   instance_type = "t2.micro"
   region        = "us-east-2"
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*"
+      name                = "amzn2-ami-kernel-*"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
     most_recent = true
-    owners      = ["099720109477"]
+    owners      = ["amazon"]
   }
-  ssh_username = "ubuntu"
-}
-
-variable "version" {
-  type        = string
-  description = "Specify the code version."
-}
-
-build {
-  name = "learn-packer"
-  sources = [
-    "source.amazon-ebs.ubuntu"
-  ]
-
-  provisioner "shell" {
-    inline = ["cloud-init status --wait"]
-  }
-
-  provisioner "shell" {
-    inline = [
-      "sudo apt-get update -q",
-      "sudo apt-get upgrade -yq",
-      "sudo apt-get install -yq nodejs npm"
-    ]
-  }
-
-  provisioner "file" {
-    source      = "../app"
-    destination = "/tmp/app"
-  }
+  ssh_username = "ec2-user"
 }
