@@ -14,8 +14,8 @@ resource "aws_network_acl" "public" {
     protocol   = "tcp"
     rule_no    = 100
     action     = "allow"
-    from_port  = 80
-    to_port    = 80
+    from_port  = 0
+    to_port    = 65535
     cidr_block = "0.0.0.0/0"
   }
 
@@ -23,26 +23,8 @@ resource "aws_network_acl" "public" {
     protocol   = "tcp"
     rule_no    = 100
     action     = "allow"
-    from_port  = 80
-    to_port    = 80
-    cidr_block = "0.0.0.0/0"
-  }
-
-  egress {
-    protocol   = "tcp"
-    rule_no    = 200
-    action     = "allow"
-    from_port  = 22
-    to_port    = 22
-    cidr_block = "0.0.0.0/0"
-  }
-
-  ingress {
-    protocol   = "tcp"
-    rule_no    = 200
-    action     = "allow"
-    from_port  = 22
-    to_port    = 22
+    from_port  = 0
+    to_port    = 65535
     cidr_block = "0.0.0.0/0"
   }
 
@@ -79,7 +61,7 @@ resource "aws_route_table_association" "public" {
 
 resource "aws_subnet" "public" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
+  cidr_block = "10.0.0.0/24"
 
   tags = {
     Name = "public"
