@@ -15,7 +15,7 @@ resource "aws_security_group" "app" {
   }
 }
 
-resource "aws_security_group_rule" "allow_ssh" {
+resource "aws_security_group_rule" "ssh_in" {
   security_group_id = aws_security_group.app.id
   type              = "ingress"
   from_port         = 22
@@ -24,11 +24,20 @@ resource "aws_security_group_rule" "allow_ssh" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "allow_http" {
+resource "aws_security_group_rule" "nodejs" {
   security_group_id = aws_security_group.app.id
   type              = "ingress"
   from_port         = 3000
   to_port           = 3000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "https_out" {
+  security_group_id = aws_security_group.app.id
+  type              = "egress"
+  from_port         = 443
+  to_port           = 443
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
 }
@@ -49,7 +58,7 @@ resource "aws_instance" "app" {
 
 
   tags = {
-    Name = "test-app-v${var.app_version}"
+    Name = "test-app"
   }
 
   depends_on = [aws_internet_gateway.main]
@@ -61,6 +70,10 @@ resource "aws_launch_template" "app" {
   user_data     = local.app_user_data
   key_name      = local.app_key_name
 
+  iam_instance_profile {
+    arn = aws_iam_instance_profile.app.arn
+  }
+
   network_interfaces {
     associate_public_ip_address = true
     security_groups             = local.app_security_groups
@@ -70,7 +83,8 @@ resource "aws_launch_template" "app" {
     resource_type = "instance"
 
     tags = {
-      Name = "test-app-v${var.app_version}"
+      Name                  = "test-app"
+      CodeDeployApplication = "app"
     }
   }
 }

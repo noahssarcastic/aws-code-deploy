@@ -15,4 +15,8 @@ build {
     source      = "${path.root}/../app"
     destination = "/tmp/app"
   }
+
+  provisioner "shell" {
+    script = "${path.root}/install_code_deploy_agent.sh"
+  }
 }

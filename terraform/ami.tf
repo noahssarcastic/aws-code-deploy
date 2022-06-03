@@ -4,6 +4,6 @@ data "aws_ami" "app" {
 
   filter {
     name   = "name"
-    values = ["test-app-v${var.app_version}"]
+    values = ["test-app-v*"]
   }
 }
