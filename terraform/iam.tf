@@ -22,7 +22,8 @@ resource "aws_iam_role" "app" {
   })
 
   managed_policy_arns = [
-    data.aws_iam_policy.ssm.arn
+    data.aws_iam_policy.ssm.arn,
+    aws_iam_policy.code_bucket.arn
   ]
 }
 
@@ -92,9 +93,12 @@ resource "aws_iam_policy" "code_bucket" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid      = ""
-        Effect   = "Allow"
-        Action   = "s3:PutObject"
+        Sid    = ""
+        Effect = "Allow"
+        Action = [
+          "s3:PutObject",
+          "s3:GetObject",
+        ]
         Resource = "${data.aws_s3_bucket.code.arn}/*"
       }
     ]
