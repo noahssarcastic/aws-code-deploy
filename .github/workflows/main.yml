@@ -9,7 +9,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: action-zip
-        uses: montudor/action-zip@v1.0.0
-        with:
-          args: zip -qq -r app.zip app
+      - name: Package app
+        run: tar -czf app.tar.gz app

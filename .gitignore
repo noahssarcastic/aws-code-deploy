@@ -13,3 +13,5 @@ override.tf.json
 
 # Node
 **/node_modules
+
+app.tar.gz
