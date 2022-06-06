@@ -16,6 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Package app
-        run: tar -czf ./app.tar.gz ./app
+        run: tar -czf ./app.tgz ./app
       - name: Push app to AWS S3
-        run: aws s3 cp ./app.tar.gz ${{ secrets.AWS_CODE_BUCKET }}
+        run: aws s3 cp ./app.tgz ${{ secrets.AWS_CODE_BUCKET }}
+
+# aws deploy create-deployment \
+#   --application-name SimpleDemoApp \
+#   --deployment-config-name CodeDeployDefault.OneAtATime \
+#   --deployment-group-name SimpleDemoDG \
+#   --s3-location bucket=bucket-name,bundleType=zip,key=samples/latest/SampleApp_Linux.zip
