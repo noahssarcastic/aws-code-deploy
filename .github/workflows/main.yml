@@ -1,0 +1,15 @@
+name: CI
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: action-zip
+        uses: montudor/action-zip@v1.0.0
+        with:
+          args: zip -qq -r app.zip app
