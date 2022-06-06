@@ -21,6 +21,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: push
     steps:
       - name: Create deployment
         run: aws deploy create-deployment
