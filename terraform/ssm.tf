@@ -1,7 +1,3 @@
-data "aws_iam_policy" "ssm" {
-  name = "AmazonSSMManagedInstanceCore"
-}
-
 # data "aws_ssm_document" "configure_aws_package" {
 #   name = "AWS-ConfigureAWSPackage"
 # }
