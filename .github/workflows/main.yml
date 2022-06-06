@@ -17,7 +17,7 @@ jobs:
       - name: Package app
         run: tar -czf ./app.tgz ./app
       - name: Push app to AWS S3
-        run: aws s3 cp ./app.tgz ${{ secrets.AWS_CODE_BUCKET }}
+        run: aws s3 cp ./app.tgz s3://${{ secrets.AWS_CODE_BUCKET }}
 
   deploy:
     runs-on: ubuntu-latest
