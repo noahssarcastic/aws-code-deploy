@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
       - name: Package app
         run: tar -czf ./app.tar.gz ./app
       - name: Push app to AWS S3
