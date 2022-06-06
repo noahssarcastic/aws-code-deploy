@@ -15,3 +15,7 @@ resource "aws_codedeploy_deployment_group" "app" {
     events  = ["DEPLOYMENT_FAILURE"]
   }
 }
+
+data "aws_s3_bucket" "code" {
+  bucket = var.code_bucket
+}
