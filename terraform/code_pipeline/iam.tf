@@ -22,9 +22,27 @@ resource "aws_iam_role" "app" {
   })
 
   managed_policy_arns = [
-    data.aws_iam_policy.ssm.arn,
     aws_iam_policy.code_bucket.arn
   ]
+}
+
+resource "aws_iam_policy" "code_bucket" {
+  name        = "CodeBucketReader"
+  description = ""
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = ""
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+        ]
+        Resource = "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+      }
+    ]
+  })
 }
 
 # Code Deploy
@@ -128,10 +146,25 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "codebuild:BatchGetBuilds",
-        "codebuild:StartBuild"
+        "codedeploy:GetDeploymentConfig"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "codedeploy:CreateDeployment",
+        "codedeploy:GetDeployment"
+      ],
+      "Resource": "${aws_codedeploy_deployment_group.app.arn}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "codedeploy:RegisterApplicationRevision",
+        "codedeploy:GetApplicationRevision"
+      ],
+      "Resource": "${aws_codedeploy_app.app.arn}"
     }
   ]
 }

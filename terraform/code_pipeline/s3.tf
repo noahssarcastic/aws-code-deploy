@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket = "test-bucket"
+  bucket_prefix = "test-bucket"
 }
 
 resource "aws_s3_bucket_acl" "codepipeline_bucket_acl" {
