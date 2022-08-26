@@ -16,7 +16,16 @@ build {
     destination = "/tmp/app"
   }
 
+  provisioner "file" {
+    source      = "${path.root}/files/myapp.service"
+    destination = "/tmp/myapp.service"
+  }
+
   provisioner "shell" {
-    script = "${path.root}/install_code_deploy_agent.sh"
+    inline = ["sudo mv /tmp/myapp.service /etc/systemd/system/myapp.service"]
+  }
+
+  provisioner "shell" {
+    script = "${path.root}/files/install_code_deploy_agent.sh"
   }
 }
