@@ -5,19 +5,19 @@ files:
     destination: /tmp/app
 hooks:
   BeforeInstall:
-    - location: scripts/before_install.sh
+    - location: app/scripts/before_install.sh
       timeout: 300
       runas: root
   AfterInstall:
-    - location: scripts/after_install.sh
+    - location: app/scripts/after_install.sh
       timeout: 300
       runas: root
   ApplicationStart:
-    - location: scripts/start.sh
+    - location: app/scripts/start.sh
       timeout: 300
       runas: root
   ApplicationStop:
-    - location: scripts/stop.sh
+    - location: app/scripts/stop.sh
       timeout: 300
       runas: root
       
