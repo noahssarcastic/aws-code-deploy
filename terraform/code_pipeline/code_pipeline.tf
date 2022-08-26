@@ -19,9 +19,10 @@ resource "aws_codepipeline" "codepipeline" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        ConnectionArn    = aws_codestarconnections_connection.github.arn
-        FullRepositoryId = "noahssarcastic/aws-code-deploy"
-        BranchName       = "main"
+        ConnectionArn        = aws_codestarconnections_connection.github.arn
+        FullRepositoryId     = "noahssarcastic/aws-code-deploy"
+        BranchName           = "main"
+        OutputArtifactFormat = "CODE_ZIP"
       }
     }
   }
