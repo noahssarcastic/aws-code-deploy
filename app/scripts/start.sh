@@ -1,3 +1,4 @@
 #!/bin/bash
 
-node tmp/app/index.js &
+# node tmp/app/index.js &
+systemctl start myapp
