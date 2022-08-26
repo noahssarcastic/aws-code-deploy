@@ -14,7 +14,7 @@ User=nobody
 Group=nobody
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/tmp/app/index.js
+WorkingDirectory=/tmp/app
 
 [Install]
 WantedBy=multi-user.target
