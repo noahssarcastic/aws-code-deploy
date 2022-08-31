@@ -20,10 +20,6 @@ resource "aws_iam_role" "app" {
       },
     ]
   })
-
-  managed_policy_arns = [
-    aws_iam_policy.code_bucket.arn
-  ]
 }
 
 resource "aws_iam_policy" "code_bucket" {
@@ -43,6 +39,35 @@ resource "aws_iam_policy" "code_bucket" {
       }
     ]
   })
+}
+
+resource "aws_iam_role_policy_attachment" "code_bucket" {
+  policy_arn = aws_iam_policy.code_bucket.arn
+  role       = aws_iam_role.app.name
+}
+
+resource "aws_iam_policy" "set_revision" {
+  name        = "ReadCommitId"
+  description = ""
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = ""
+        Effect = "Allow"
+        Action = [
+          "codedeploy:GetDeployment",
+        ]
+        Resource = "${aws_codedeploy_deployment_group.app.arn}"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "set_revision" {
+  policy_arn = aws_iam_policy.set_revision.arn
+  role       = aws_iam_role.app.name
 }
 
 # Code Deploy
