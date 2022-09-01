@@ -57,9 +57,10 @@ resource "aws_iam_policy" "set_revision" {
         Sid    = ""
         Effect = "Allow"
         Action = [
-          "codedeploy:GetDeployment",
+          "codedeploy:*",
+          "codepipeline:*",
         ]
-        Resource = "${aws_codedeploy_deployment_group.app.arn}"
+        Resource = "*"
       }
     ]
   })
